@@ -32,8 +32,10 @@ public class ControllerManager {
             Controller controller = interator.next();
             if(!controller.getModel().isAlive()){
                 interator.remove();
+               // BodyManager.instance.remove(controller);
             }
         }
+
     }
 
     public void add(Controller controller) {

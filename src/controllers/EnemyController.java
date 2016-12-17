@@ -26,17 +26,21 @@ public class EnemyController extends Controller implements Body {
         timeCounter = 0;
         BodyManager.instance.register(this);
     }
-
+    public static double deg=-1;
     @Override
     public void run() {
         //Move
-        this.model.move(-SPEED, SPEED);
-        create2(100,100).model.move(-SPEED,0);
+
+        this.model.move(SPEED, SPEED);
+
+
+
+//        create2(100,100).model.move(-SPEED,0);
         //create2(100,100).model.move(0, SPEED);
         //create(200,0).model.move(-SPEED,SPEED);
 
         timeCounter++;
-        if (timeCounter > 30) {
+        if (timeCounter > 50) {
             shoot();
             timeCounter = 0;
         }
@@ -68,20 +72,23 @@ public class EnemyController extends Controller implements Body {
 
     public static EnemyController create(int x, int y) {
         return new EnemyController(
-                new Model(x, y, WIDTH, HEIGHT),
+                new Model(x, y, WIDTH, HEIGHT, 1),
                 new View(Utils.loadImage("resources/plane1.png"))
         );
     }
-    public static EnemyController create2 (int a, int b) {
-        return new EnemyController(
-                new Model(a, b, WIDTH, HEIGHT),
-                new View(Utils.loadImage("resources/enemy-green-1.png"))
-        );
-    }
+//    public static EnemyController create2 (int a, int b) {
+//        return new EnemyController(
+//                new Model(a, b, WIDTH, HEIGHT, 1),
+//                new View(Utils.loadImage("resources/enemy-green-1.png"))
+//        );
+ //   }
     public void onContact (Body other) {
         if (other instanceof BulletController) {
             System.out.println("huhu");
-            this.model.setAlive(false);
+            this.model.dechp(1);
+//            if(int model.getHp() =0) {
+//                this.model.setAlive(false);
+//            }
         }
     }
 }

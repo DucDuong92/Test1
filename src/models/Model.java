@@ -11,15 +11,25 @@ public class Model {
     private int width;
     private int height;
     private boolean isAlive = true;
+    private int hp;
 
-    public Model(int x, int y, int width, int height) {
+    public int getHp() {
+        return hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public Model(int x, int y, int width, int height, int hp) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.hp = hp;
     }
 
-    public void move(int dx, int dy) {
+    public void move(double dx, double dy) {
         this.x += dx;
         this.y += dy;
     }
@@ -88,5 +98,11 @@ public class Model {
         }
         Rectangle rect2 = other.getRect();
         return rect1.intersects(rect2);
+    }
+    public void dechp (int dec){
+        hp--;
+        if (hp<=0) {
+            isAlive=false;
+        }
     }
 }

@@ -14,20 +14,22 @@ public class EnemyControllerManager extends ControllerManager {
     public void run() {
         super.run();
         spawn();
+
     }
 
     private void spawn() {
         timeCounter++;
-        if(timeCounter > 20) {
+        if(timeCounter > 40) {
 
             //1: Create enemy
-            EnemyController enemyController = EnemyController.create(300, 0);
-            EnemyController enemyController2 = EnemyController.create2(200, 0);
+            EnemyController enemyController = EnemyController.create(300, 100);
+           // EnemyController enemyController2 = EnemyController.create2(200, 200);
             timeCounter = 0;
 
             //2: Add new enemy to vector
             this.controllers.add(enemyController);
-            this.controllers.add(enemyController2);
+           // this.controllers.add(enemyController2);
         }
     }
+
 }

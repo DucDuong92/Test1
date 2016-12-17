@@ -1,5 +1,6 @@
 package controllers;
 
+import controllers.manangers.BodyManager;
 import models.Model;
 import utils.Utils;
 import views.View;
@@ -15,6 +16,7 @@ public class EnemyBulletController extends Controller implements Body {
 
     public EnemyBulletController(Model model, View view) {
         super(model, view);
+        BodyManager.instance.register(this);
     }
 
     @Override
@@ -24,7 +26,7 @@ public class EnemyBulletController extends Controller implements Body {
 
     public static EnemyBulletController create(int x, int y) {
         return new EnemyBulletController(
-                new Model(x, y, WIDTH, HEIGHT),
+                new Model(x, y, WIDTH, HEIGHT,1),
                 new View(Utils.loadImage("resources/bullet-round.png"))
         );
     }

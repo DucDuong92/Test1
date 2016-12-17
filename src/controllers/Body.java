@@ -8,4 +8,5 @@ import models.Model;
 public interface Body { //Pure abstract
       Model getModel();
      void onContact(Body other);
+
 }

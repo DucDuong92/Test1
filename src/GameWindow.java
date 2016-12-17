@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.Vector;
 
 import static utils.Utils.loadImage;
-
+//123
 // Data abstraction
 
 /**
@@ -147,7 +147,7 @@ public class GameWindow extends Frame implements Runnable {
         while (true) {
             try {
                 this.repaint();
-                Thread.sleep(17);
+                Thread.sleep(30);
                 BodyManager.instance.checkContact();
                 for(BulletController bullet : bulletVector)
                     bullet.run();

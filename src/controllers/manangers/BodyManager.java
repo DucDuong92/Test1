@@ -19,6 +19,9 @@ public class BodyManager {
     public void register(Body body){
         this.bodies.add(body);
     }
+    public void remove (Body body){
+     this.bodies.remove(body);
+    }
 
     public void checkContact(){
         for (int i=0; i< bodies.size()-1 ;i++) {
@@ -29,8 +32,8 @@ public class BodyManager {
                 Model modeli = bodyi.getModel();
                 Model modelj = bodyj.getModel();
                 if(modeli.intersects(modelj)){
-                    bodyi.onContact(bodyi);
-                    bodyj.onContact(bodyj);
+                    bodyi.onContact(bodyj);
+                    bodyj.onContact(bodyi);
                 }
             }
         }
