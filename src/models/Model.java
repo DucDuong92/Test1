@@ -11,22 +11,22 @@ public class Model {
     private int width;
     private int height;
     private boolean isAlive = true;
-    private int hp;
 
-    public int getHp() {
-        return hp;
-    }
 
-    public void setHp(int hp) {
-        this.hp = hp;
-    }
+//    public int getHp() {
+//        return hp;
+//    }
+//
+//    public void setHp(int hp) {
+//        this.hp = hp;
+//    }
 
-    public Model(int x, int y, int width, int height, int hp) {
+    public Model(int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.hp = hp;
+ //       this.hp = hp;
     }
 
     public void move(double dx, double dy) {
@@ -92,17 +92,17 @@ public class Model {
     }
     public boolean intersects (Model other){
         Rectangle rect1 = this.getRect();
-        if (other == null) {
+ //       if (other == null) {
             //System.out.println(other.getClass().toString());
             //System.out.println("WTH");
-        }
+  //      }
         Rectangle rect2 = other.getRect();
         return rect1.intersects(rect2);
     }
-    public void dechp (int dec){
-        hp--;
-        if (hp<=0) {
-            isAlive=false;
-        }
-    }
+//    public void dechp (int dec){
+//        hp--;
+//        if (hp <=0) {
+//            isAlive=false;
+//        }
+//    }
 }

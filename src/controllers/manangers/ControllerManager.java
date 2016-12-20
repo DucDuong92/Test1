@@ -24,6 +24,7 @@ public class ControllerManager {
     }
 
     public void run() {
+
         for(Controller controller: this.controllers) {
             controller.run();
         }

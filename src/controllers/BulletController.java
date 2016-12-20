@@ -22,7 +22,7 @@ public class BulletController extends Controller implements Body {
     }
     public static BulletController creatBullet(int x,int y){
         BulletController bulletController = new BulletController(
-                new Model(x,y,12,30, 1),
+                new Model(x,y,12,30),
                 new View(Utils.loadImage("resources/bullet.png"))
         );
         return  bulletController;

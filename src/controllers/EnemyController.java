@@ -72,7 +72,7 @@ public class EnemyController extends Controller implements Body {
 
     public static EnemyController create(int x, int y) {
         return new EnemyController(
-                new Model(x, y, WIDTH, HEIGHT, 1),
+                new Model(x, y, WIDTH, HEIGHT),
                 new View(Utils.loadImage("resources/plane1.png"))
         );
     }
@@ -85,9 +85,9 @@ public class EnemyController extends Controller implements Body {
     public void onContact (Body other) {
         if (other instanceof BulletController) {
             System.out.println("huhu");
-            this.model.dechp(1);
+//            this.model.dechp(1);
 //            if(int model.getHp() =0) {
-//                this.model.setAlive(false);
+                this.model.setAlive(false);
 //            }
         }
     }

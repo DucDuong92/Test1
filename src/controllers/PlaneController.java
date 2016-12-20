@@ -42,7 +42,7 @@ public class PlaneController extends Controller implements Body {
     // Factory
     public static PlaneController createPlane(int x, int y) {
         PlaneController planeController = new PlaneController(
-                new Model(x, y, 70, 50, 2),
+                new Model(x, y, 70, 50),
                 new View(Utils.loadImage("resources/plane3.png"))
         );
 
@@ -53,8 +53,10 @@ public class PlaneController extends Controller implements Body {
     public void onContact(Body other) {
         if(other instanceof EnemyBulletController){
             System.out.println("die");
-           this.model.dechp(1);
+ //          this.model.dechp(1);
+            this.model.setAlive(false);
         }
+
 
     }
 }

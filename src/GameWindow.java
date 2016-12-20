@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.Vector;
 
 import static utils.Utils.loadImage;
-//123
+
 // Data abstraction
 
 /**

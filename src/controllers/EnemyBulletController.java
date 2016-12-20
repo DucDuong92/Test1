@@ -26,13 +26,18 @@ public class EnemyBulletController extends Controller implements Body {
 
     public static EnemyBulletController create(int x, int y) {
         return new EnemyBulletController(
-                new Model(x, y, WIDTH, HEIGHT,1),
+                new Model(x, y, WIDTH, HEIGHT),
                 new View(Utils.loadImage("resources/bullet-round.png"))
         );
     }
 
     @Override
     public void onContact(Body other) {
+        if (other instanceof PlaneController){
+            System.out.println("trung dan");
+            this.model.setAlive(false);
+ //           this.model.dechp(1);
+        }
 
     }
 }
