@@ -7,6 +7,7 @@ import views.View;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Vector;
 
 /**
  * Created by apple on 12/3/16.
@@ -16,10 +17,11 @@ public class PlaneController extends Controller implements Body {
     private static final int SPEED = 5;
 
     public KeySetting keySetting;
-   // public Model model;
+    private Vector<PlaneController> planeControllers;
 
     public PlaneController(Model model, View view) {
         super(model, view);
+        planeControllers = new Vector<>();
         BodyManager.instance.register(this);
     }
 
@@ -51,7 +53,7 @@ public class PlaneController extends Controller implements Body {
 
     @Override
     public void onContact(Body other) {
-        if(other instanceof EnemyBulletController){
+       if(other instanceof EnemyBulletController){
             System.out.println("die");
  //          this.model.dechp(1);
             this.model.setAlive(false);

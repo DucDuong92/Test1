@@ -6,14 +6,17 @@ import utils.Utils;
 import views.View;
 
 import java.awt.*;
+import java.util.Vector;
 
 /**
  * Created by apple on 12/7/16.
  */
 public class BulletController extends Controller implements Body {
+    private Vector<BulletController> bulletControllers;
 
     public BulletController(Model model, View view) {
         super(model, view);
+        bulletControllers = new Vector<>();
         BodyManager.instance.register(this);
     }
 

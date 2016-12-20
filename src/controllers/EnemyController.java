@@ -26,7 +26,6 @@ public class EnemyController extends Controller implements Body {
         timeCounter = 0;
         BodyManager.instance.register(this);
     }
-    public static double deg=-1;
     @Override
     public void run() {
         //Move
