@@ -1,13 +1,18 @@
 package controllers;
 
+import controllers.enemies.EnemyBulletController;
+import controllers.enemies.EnemyController;
 import controllers.manangers.BodyManager;
+import controllers.manangers.BombController;
+import controllers.manangers.ControllerManager;
+import controllers.manangers.EnemyControllerManager;
 import models.Model;
 import utils.Utils;
+import views.SingleView;
 import views.View;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.Vector;
 
 /**
  * Created by apple on 12/3/16.
@@ -17,11 +22,14 @@ public class PlaneController extends Controller implements Body {
     private static final int SPEED = 5;
 
     public KeySetting keySetting;
-    private Vector<PlaneController> planeControllers;
+    EnemyController enemyController;
+    private ControllerManager bulletManager;
 
-    public PlaneController(Model model, View view) {
+    public static final PlaneController instance =  createPlane(300, 300);
+
+    private PlaneController(Model model, View view) {
         super(model, view);
-        planeControllers = new Vector<>();
+        bulletManager = new ControllerManager();
         BodyManager.instance.register(this);
     }
 
@@ -36,29 +44,58 @@ public class PlaneController extends Controller implements Body {
                 model.move(-SPEED, 0);
             } else if (keyCode == keySetting.keyRight) {
                 model.move(SPEED, 0);
+            } else  if(keyCode == keySetting.keyShoot) {
+                shoot();
             }
         }
     }
 
+    @Override
+    public void run() {
+        super.run();
+        bulletManager.run();
+    }
+
+    @Override
+    public void draw(Graphics g) {
+        super.draw(g);
+        bulletManager.draw(g);
+    }
+
+    private void shoot() {
+        Utils.playSound("resources/shoot.wav", false);
+        BulletController bulletController = BulletController.create(this.model.getMidX() - BulletController.WIDTH/ 2,
+                this.model.getY() - BulletController.HEIGHT);
+        bulletManager.add(bulletController);
+    }
+
     // Design pattern
     // Factory
-    public static PlaneController createPlane(int x, int y) {
+    private static PlaneController createPlane(int x, int y) {
         PlaneController planeController = new PlaneController(
                 new Model(x, y, 70, 50),
-                new View(Utils.loadImage("resources/plane3.png"))
+                new SingleView(Utils.loadImage("resources/plane3.png"))
         );
-
         return planeController;
     }
 
     @Override
     public void onContact(Body other) {
-       if(other instanceof EnemyBulletController){
-            System.out.println("die");
- //          this.model.dechp(1);
-            this.model.setAlive(false);
+        if (other instanceof EnemyBulletController) {
+            System.out.println("Plane:'(");
         }
 
-
+        if (other instanceof BombController){
+            for (int i = 0; i < BodyManager.instance.getBodies().size(); i++) {
+                if (BodyManager.instance.getBodies().get(i) instanceof EnemyController) {
+                    int x = model.getMidX() - other.getModel().getMidX();
+                    int y = model.getMidY() - other.getModel().getMidY();
+                    double r = Math.sqrt(x * x + y * y);
+                    if (r < 300) {
+                        BodyManager.instance.getBodies().get(i).getModel().setAlive(false);
+                    }
+                }
+            }
+        }
     }
 }

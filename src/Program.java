@@ -1,3 +1,6 @@
+import controllers.Body;
+import controllers.manangers.BodyManager;
+
 import java.lang.management.GarbageCollectorMXBean;
 
 /**
@@ -10,5 +13,6 @@ public class Program {
         GameWindow gameWindow = new GameWindow();
         Thread thread = new Thread(gameWindow);
         thread.start();
+
     }
 }

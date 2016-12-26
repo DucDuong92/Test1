@@ -1,35 +1,36 @@
 package controllers.manangers;
 
-import java.awt.*;
-import controllers.EnemyController;
-
-import java.util.Vector;
+import controllers.enemies.EnemyController;
+import controllers.enemies.EnemyType;
 
 /**
  * Created by apple on 12/10/16.
  */
 public class EnemyControllerManager extends ControllerManager {
-    private int timeCounter = 0;
+
+    int counter;
     @Override
     public void run() {
         super.run();
-        spawn();
-
-    }
-
-    private void spawn() {
-        timeCounter++;
-        if(timeCounter > 40) {
-
-            //1: Create enemy
-            EnemyController enemyController = EnemyController.create(300, 100);
-           // EnemyController enemyController2 = EnemyController.create2(200, 200);
-            timeCounter = 0;
-
-            //2: Add new enemy to vector
-            this.controllers.add(enemyController);
-           // this.controllers.add(enemyController2);
+        counter++;
+        if (counter == 100) {
+            spawn();
+            counter = 0;
         }
     }
 
+    private int enemyCount;
+
+    private void spawn() {
+        //1: Create enemy
+        enemyCount++;
+        EnemyController enemyController = null;
+        if(enemyCount%2 == 0) {
+            enemyController = EnemyController.create(300, 0, EnemyType.WHITE);
+        }else {
+            enemyController = EnemyController.create(300, 0, EnemyType.BROWN);
+        }
+            //2: Add new enemy to vector
+        this.controllers.add(enemyController);
+    }
 }

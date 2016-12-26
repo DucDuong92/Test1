@@ -1,6 +1,8 @@
 package controllers.manangers;
 
+import controllers.BaseController;
 import controllers.Controller;
+import controllers.GameSetting;
 
 import java.awt.*;
 
@@ -10,12 +12,17 @@ import java.util.Vector;
 /**
  * Created by apple on 12/10/16.
  */
-public class ControllerManager {
+public class ControllerManager implements BaseController {
     protected Vector<Controller> controllers;
 
     public ControllerManager() {
         controllers = new Vector<>();
     }
+
+    public static final ControllerManager enemyBullet = new ControllerManager();
+    public static final ControllerManager explosion = new ControllerManager();
+
+
 
     public void draw(Graphics g) {
         for(Controller controller : this.controllers) {
@@ -24,19 +31,17 @@ public class ControllerManager {
     }
 
     public void run() {
-
         for(Controller controller: this.controllers) {
             controller.run();
         }
-        Iterator<Controller> interator = this.controllers.iterator();
-        while (interator.hasNext()){
-            Controller controller = interator.next();
-            if(!controller.getModel().isAlive()){
-                interator.remove();
-               // BodyManager.instance.remove(controller);
+
+        Iterator<Controller> iterator = this.controllers.iterator();
+        while(iterator.hasNext()) {
+            Controller controller = iterator.next();
+            if(!controller.getModel().isAlive() || !GameSetting.instance.isInScreen(controller)){
+                iterator.remove();
             }
         }
-
     }
 
     public void add(Controller controller) {

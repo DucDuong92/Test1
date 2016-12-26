@@ -1,42 +1,41 @@
 package controllers;
 
+import controllers.enemies.EnemyController;
 import controllers.manangers.BodyManager;
 import models.Model;
 import utils.Utils;
+import views.SingleView;
 import views.View;
-
-import java.awt.*;
-import java.util.Vector;
 
 /**
  * Created by apple on 12/7/16.
  */
 public class BulletController extends Controller implements Body {
-    private Vector<BulletController> bulletControllers;
+
+    public static final int WIDTH = 10;
+    public static final int HEIGHT = 30;
 
     public BulletController(Model model, View view) {
         super(model, view);
-        bulletControllers = new Vector<>();
         BodyManager.instance.register(this);
     }
 
     public void run() {
         this.model.move(0, -5);
     }
-    public static BulletController creatBullet(int x,int y){
-        BulletController bulletController = new BulletController(
-                new Model(x,y,12,30),
-                new View(Utils.loadImage("resources/bullet.png"))
-        );
-        return  bulletController;
-    }
-
 
     @Override
     public void onContact(Body other) {
-        if (other instanceof EnemyController ) {
+        if(other instanceof EnemyController) {
             System.out.println("Oh yeah");
             this.model.setAlive(false);
+            ((EnemyController) other).destroy();
         }
+    }
+
+    public static BulletController create(int x, int y) {
+        Model bullet = new Model(x, y, WIDTH, HEIGHT);
+        SingleView singleView = new SingleView(Utils.loadImage("resources/bullet.png"));
+        return new BulletController(bullet, singleView);
     }
 }
