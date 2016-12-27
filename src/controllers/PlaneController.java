@@ -8,6 +8,7 @@ import controllers.manangers.ControllerManager;
 import controllers.manangers.EnemyControllerManager;
 import models.Model;
 import utils.Utils;
+import views.Animation;
 import views.SingleView;
 import views.View;
 
@@ -24,6 +25,8 @@ public class PlaneController extends Controller implements Body {
     public KeySetting keySetting;
     EnemyController enemyController;
     private ControllerManager bulletManager;
+    private int timecounter =20;
+    private int lives =3;
 
     public static final PlaneController instance =  createPlane(300, 300);
 
@@ -54,12 +57,29 @@ public class PlaneController extends Controller implements Body {
     public void run() {
         super.run();
         bulletManager.run();
+        if (!this.model.isAlive()){
+            timecounter--;
+            if( timecounter ==0){
+                this.model.setAlive(true);
+                timecounter =20;
+                BodyManager.instance.register(this);
+                this.model.setX(400);
+                this.model.setY(100);
+            }
+        }
+        if (lives == 0){
+            System.out.println("Game Over!!!");
+            System.out.println("------------");
+            System.exit(0);
+        }
     }
 
     @Override
     public void draw(Graphics g) {
-        super.draw(g);
-        bulletManager.draw(g);
+        if(this.getModel().isAlive()) {
+            super.draw(g);
+            bulletManager.draw(g);
+        }
     }
 
     private void shoot() {
@@ -83,6 +103,11 @@ public class PlaneController extends Controller implements Body {
     public void onContact(Body other) {
         if (other instanceof EnemyBulletController) {
             System.out.println("Plane:'(");
+            this.model.setAlive(false);
+            destroy();
+            Utils.playSound("resources/Explosion.wav", false);
+            lives--;
+
         }
 
         if (other instanceof BombController){
@@ -97,5 +122,12 @@ public class PlaneController extends Controller implements Body {
                 }
             }
         }
+    }
+    public void destroy(){
+        ExplosionController explosionController = new ExplosionController(
+                new Model(this.getModel().getX()+ 10, this.getModel().getY()+ 10, 32, 32),
+                new Animation(Utils.loadSheet("resources/explosion.png", 32,32,1,6))
+        );
+        ControllerManager.explosion.add(explosionController);
     }
 }

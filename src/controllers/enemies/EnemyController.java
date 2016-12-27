@@ -115,6 +115,7 @@ public class EnemyController extends Controller implements Body {
         if (other instanceof BulletController) {
             System.out.println("Huhu");
             this.model.setAlive(false);
+            Utils.playSound("resources/Explosion3.wav", false);
         }
     }
 
